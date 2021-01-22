@@ -14,8 +14,8 @@ const menuGlobal=[
         name:'bbb页',
         icon:'user',
         path: '/aaa/bbb',
-        models: () => [import('../models/bbb')], //models可多个
-        component: () => import('../routes/BBB'),
+        models: () => [import('../models/codeMirror/bbb')], //models可多个
+        component: () => import('../routes/codeMirror/BBB'),
     }, 
     {
         id:'ccc',

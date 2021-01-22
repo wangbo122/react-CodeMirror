@@ -11,7 +11,7 @@ class CCC extends Component {
         </p>
         <Link to={'/aaa'}>去AAA页面</Link>
         <br />
-        <Link to={'/aaa/bbb'}>去BBB页面</Link>
+        <Link to={'/aaa/bbb'}>去codeMirror页面</Link>
       </div>
     );
   }
