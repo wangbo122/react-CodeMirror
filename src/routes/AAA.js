@@ -11,7 +11,7 @@ class AAA extends Component {
         </p>
         <Link to={'/aaa/bbb'}>
           <Button type={'primary'}>
-            去codeMirror页面
+            去代码编辑器页面
           </Button>
         </Link>
         <br />
