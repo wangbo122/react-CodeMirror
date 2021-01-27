@@ -1,3 +1,7 @@
+/**
+ * @author wangbo
+ * @description 封装编辑器AceEditor
+ */
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-sh";
 import "ace-builds/src-noconflict/mode-python";

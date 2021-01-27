@@ -1,0 +1,35 @@
+/* 文件名太长的话 会超出容器 很难看， */
+.codeEditor {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(21, 21, 21);
+  .main_bav {
+    padding: 0 8px;
+    .menu_bar {
+      color: white;
+      :global{
+        .ant-menu{
+          display: inline-block;
+        }
+      }
+      svg{
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  :global {
+    .ant-tree-list {
+      color: #999999;
+      border: 1px solid rgb(36, 36, 36);
+    }
+    .ant-tree-node-content-wrapper {
+      overflow: hidden; //超出的文本隐藏
+      text-overflow: ellipsis; //溢出用省略号显示
+      white-space: nowrap; //溢出不换行
+    }
+  }
+}

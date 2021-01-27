@@ -14,8 +14,8 @@ const menuGlobal=[
         name:'bbb页',
         icon:'user',
         path: '/aaa/bbb',
-        models: () => [import('../models/codeMirror/bbb')], //models可多个
-        component: () => import('../routes/codeMirror/BBB'),
+        models: () => [import('../models/codeEditor/codeEditor')], //models可多个
+        component: () => import('../routes/codeEditor/index'),
     }, 
     {
         id:'ccc',
@@ -25,7 +25,7 @@ const menuGlobal=[
         path: '/ccc',
         models: () => [import('../models/ccc')], //models可多个
         component: () => import('../routes/CCC'),
-    }, 
+    },
   ];
   
 export default {
