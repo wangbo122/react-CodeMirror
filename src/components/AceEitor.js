@@ -6,16 +6,17 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-sh";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-twilight";
+import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
 export default (props)=>{
 	const {mode,height,width,name,placeholder,value,onChange,theme} = props;
 	return (
 	<AceEditor
-	width={width||'500px'}
-	height={height||'300px'}
+	width={width||'100%'}
+	height={height||'100%'}
     mode={mode||'python'}
-    theme={theme||'monokai'}
+    theme={theme||'twilight'}
     placeholder={placeholder || ''}
     onChange={onChange}
     name={name||'ace-editor'}

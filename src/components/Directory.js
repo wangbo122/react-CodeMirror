@@ -12,7 +12,6 @@ export default class Directory extends Component {
     const {treeData} = this.props;
     return (
         <DirectoryTree
-          style={{width:'200px'}}
           multiple={false}
           defaultExpandAll
           onSelect={this.onSelect}

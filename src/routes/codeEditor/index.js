@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Form } from 'antd';
-import style from './index.less'
-import Iconfont from '../../icon'
+import style from './index.less';
+import Iconfont from '../../icon';
 import AceEditor from '../../components/AceEitor';
 import Directory from '../../components/Directory';
-import EditorMenu from '../../components/EditorMenu';
-
+import EditorMenu from '../../components/EditorMenu/EditorMenu';
 
 const treeData = [
   {
@@ -50,20 +48,23 @@ class codeEditor extends Component {
   render() {
     return (
       <div className={style.codeEditor}>
+        {/* 功能区 */}
         <div className={style.main_bav}>
           <div className={style.menu_bar}>
-            <Iconfont type={'icon-lifangtilitiduomiantifangkuai2'} style={{color:'white'}}/>
-            <EditorMenu theme='dark'/>
+            <Iconfont type={'icon-lifangtilitiduomiantifangkuai2'} style={{ color: 'white' }} />
+            <EditorMenu theme="dark" />
           </div>
-          登录
+          {/* 登录 */}
         </div>
 
-        <div className={style.left_file_explorer}>
-          <Directory treeData={treeData}/>
-        </div>
-
-        <div className={style.right_container}>
-          <AceEditor mode="python" theme="monokai" width="100%" height="400px" onChange={this.getCode}/>
+        {/* 内容区 */}
+        <div className={style.container}>
+          <div className={style.left_file_explorer}>
+            <Directory treeData={treeData} />
+          </div>
+          <div className={style.right_editor}>
+            <AceEditor mode="python" onChange={this.getCode} />
+          </div>
         </div>
       </div>
     );

@@ -3,28 +3,37 @@
   width: 100vw;
   height: 100vh;
   background-color: rgb(21, 21, 21);
+  overflow: hidden;
   .main_bav {
-    padding: 0 8px;
+    padding: 0 10px;
+    border-bottom: 1px solid rgb(36, 36, 36);
+    height: 8%;
     .menu_bar {
       color: white;
-      :global{
-        .ant-menu{
-          display: inline-block;
-        }
-      }
+      display: flex;
+      align-items: center;
       svg{
-        width: 40px;
-        height: 40px;
-        padding: 10px;
-        margin-right: 10px;
+        font-size: 20px;
       }
+    }
+  }
+
+  .container{
+    height: 92%;
+    display: flex;
+    .left_file_explorer{
+      border: 1px solid rgb(36, 36, 36);
+      width: 20%;
+    }
+    .right_editor{
+      width: 80%;
     }
   }
 
   :global {
     .ant-tree-list {
+      background-color: rgb(21, 21, 21);
       color: #999999;
-      border: 1px solid rgb(36, 36, 36);
     }
     .ant-tree-node-content-wrapper {
       overflow: hidden; //超出的文本隐藏
