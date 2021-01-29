@@ -4,58 +4,101 @@
  */
 import React, { Component } from 'react';
 import { Tree } from 'antd';
-import style from './Directory.less'
+import style from './Directory.less';
+import Iconfont from '../../icon';
 const { DirectoryTree } = Tree;
 
-const treeData = [
-  {
-    title: '文件夹1',
-    key: 'parent1',
-    children: [
+export default class Directory extends Component {
+  state = {
+    data: [],
+  };
+
+  componentDidMount() {
+    const data = [
       {
-        title: '文件夹1-1',
-        key: 'parent1-1',
+        title: '文件夹1',
+        key: 'parent1',
+        type: '1', // type为1代表文件夹，type为2代表文件
         children: [
           {
-            title: '文件夹1-1-1',
-            key: 'parent1-1-1',
+            title: '文件夹1-1',
+            key: 'parent1-1',
+            type: '1',
             children: [
-              { title: 'component.js', key: 'component12345', isLeaf: true },
-              { title: 'esssey.py', key: 'esssey12345', isLeaf: true },
+              {
+                title: '文件夹1-1-1',
+                key: 'parent1-1-1',
+                type: '1',
+                children: [
+                  { title: 'component.js', key: 'component12345', type: '2', isLeaf: true },
+                  { title: 'esssey.py', key: 'esssey12345', type: '2', isLeaf: true },
+                ],
+              },
             ],
           },
         ],
       },
-    ],
-  },
-  {
-    title: '文件夹2',
-    key: 'parent2',
-    children: [
-      { title: 'component1.js', key: 'component123451', isLeaf: true },
-      { title: 'esssey1.py', key: 'esssey123451', isLeaf: true },
-    ],
-  },
-  {
-    title: '文件夹3',
-    key: 'parent3',
-    children: [
-      { title: 'component2.js', key: 'component123452', isLeaf: true },
-      { title: 'esssey2.py', key: 'esssey123452', isLeaf: true },
-    ],
-  },
-];
+      {
+        title: '文件夹2',
+        key: 'parent2',
+        type: '1',
+        children: [
+          { title: 'component1.js', key: 'component123451', type: '2', isLeaf: true },
+          { title: 'esssey1.py', key: 'esssey123451', type: '2', isLeaf: true },
+        ],
+      },
+      {
+        title: '文件夹3',
+        key: 'parent3',
+        type: '1',
+        children: [
+          { title: 'component2.js', key: 'component123452', type: '2', isLeaf: true },
+          { title: 'esssey2.py', key: 'esssey123452', type: '2', isLeaf: true },
+        ],
+      },
+    ];
+    this.setState({ data });
+  }
 
-export default class Directory extends Component {
+  // 通过 type和文件名判断图标
+  matchFileIcon = (type, title) => {
+    const jsRegex = /\.js$/;
+    const pyRegex = /\.py$/;
+    // type为1代表文件夹，type为2代表文件， 文件通过后缀给图标
+    if (type === '1') return 'icon-wenjianjia';
+    if (type === '2'&& title.match(jsRegex)){
+      return 'icon-js';
+    }
+    if (type === '2'&& title.match(pyRegex)){
+      return 'icon-python';
+    }
+  };
+
+  // 遍历data，生成想要的treeNode
+  setTreeData = (data) => {
+    return data.map((item) => {
+      let obj = {
+        ...item,
+        title: (<div><Iconfont type={this.matchFileIcon(item.type, item.title)}/>{item.title}</div>)
+      }
+      if(item['children']){
+        obj.children = this.setTreeData(item.children)
+      }
+      return obj
+    });
+  };
+
   render() {
+    const { data } = this.state;
     return (
-        <DirectoryTree
-          multiple={false}
-          defaultExpandAll
-          onSelect={this.onSelect}
-          onExpand={this.onExpand}
-          treeData={treeData}
-        />
+      <DirectoryTree
+        icon={false}
+        multiple={false}
+        defaultExpandAll
+        onSelect={this.onSelect}
+        onExpand={this.onExpand}
+        treeData={this.setTreeData(data)}
+      />
     );
   }
   onSelect = (keys, info) => {
