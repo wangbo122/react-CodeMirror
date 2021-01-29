@@ -26,7 +26,7 @@ export default class Directory extends Component {
             type: '1',
             children: [
               {
-                title: '文件夹1-1-1',
+                title: '文件夹1-1-1777777777777777777777777777',
                 key: 'parent1-1-1',
                 type: '1',
                 children: [
@@ -79,9 +79,26 @@ export default class Directory extends Component {
     return data.map((item) => {
       let obj = {
         ...item,
-        title: (<div><Iconfont type={this.matchFileIcon(item.type, item.title)}/>{item.title}</div>)
+        title: (<div className={style.menu_item}>
+                  <Iconfont type={this.matchFileIcon(item.type, item.title)}/>
+                  {item.title}
+                  <div className={style.menu_features}>
+                    <Iconfont type='icon-bi'/>
+                    <Iconfont type='icon-cha'/>
+                  </div>
+                </div>)
       }
       if(item['children']){
+        obj.title = (<div className={style.menu_item}>
+                      <Iconfont type={this.matchFileIcon(item.type, item.title)}/>
+                      {item.title}
+                      <div className={style.menu_features}>
+                        <Iconfont type='icon-bi'/>
+                        <Iconfont type='icon-wenjian'/>
+                        <Iconfont type='icon-wenjianjia1'/>
+                        <Iconfont type='icon-cha'/>
+                      </div>
+                    </div>)
         obj.children = this.setTreeData(item.children)
       }
       return obj
