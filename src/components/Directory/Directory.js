@@ -8,13 +8,7 @@ import style from './Directory.less';
 import Iconfont from '../../icon';
 const { DirectoryTree } = Tree;
 
-export default class Directory extends Component {
-  state = {
-    data: [],
-  };
-
-  componentDidMount() {
-    const data = [
+const data = [
       {
         title: '文件夹1',
         key: 'parent1',
@@ -57,6 +51,13 @@ export default class Directory extends Component {
         ],
       },
     ];
+export default class Directory extends Component {
+  state = {
+    data: [], // 文件菜单的数据
+    isShowActionId: '', // 通过id控制 该文件显示操作栏
+  };
+
+  componentDidMount() {
     this.setState({ data });
   }
 
@@ -77,22 +78,26 @@ export default class Directory extends Component {
   // 遍历data，生成想要的treeNode
   setTreeData = (data) => {
     return data.map((item) => {
+      // 如果是文件
       let obj = {
         ...item,
         title: (<div className={style.menu_item}>
                   <Iconfont type={this.matchFileIcon(item.type, item.title)}/>
                   {item.title}
-                  <div className={style.menu_features}>
+                  <div className={style.menu_features} style={{width: '38px'}}>
                     <Iconfont type='icon-bi'/>
                     <Iconfont type='icon-cha'/>
                   </div>
                 </div>)
       }
+      // 如果为文件夹
       if(item['children']){
         obj.title = (<div className={style.menu_item}>
-                      <Iconfont type={this.matchFileIcon(item.type, item.title)}/>
-                      {item.title}
-                      <div className={style.menu_features}>
+                      <div className={style.file_name}>
+                        <Iconfont type={this.matchFileIcon(item.type, item.title)}/>
+                        {item.title}
+                      </div>
+                      <div className={style.menu_features} style={{width: '75px'}}>
                         <Iconfont type='icon-bi'/>
                         <Iconfont type='icon-wenjian'/>
                         <Iconfont type='icon-wenjianjia1'/>
@@ -112,6 +117,7 @@ export default class Directory extends Component {
         icon={false}
         multiple={false}
         defaultExpandAll
+        onDragOver={(event, node)=>{console.log(event, node)}}
         onSelect={this.onSelect}
         onExpand={this.onExpand}
         treeData={this.setTreeData(data)}

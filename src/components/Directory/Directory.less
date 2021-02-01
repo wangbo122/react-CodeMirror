@@ -2,8 +2,22 @@
   overflow: hidden; //超出的文本隐藏
   text-overflow: ellipsis; //溢出用省略号显示
   white-space: nowrap; //溢出不换行
+  width: calc(100%-75px);
+  &:hover {
+    .menu_features {
+      display: block;
+    }
+  }
+  .file_name{
+    position: relative;
+    display: inline;
+  }
   .menu_features {
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgb(42, 45, 46);
+    display: none;
   }
 }
 
