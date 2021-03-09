@@ -25,7 +25,7 @@ class VideoJs extends Component {
         textTrackDisplay: false,
         controlBar: true,
         errorDisplay: false,
-        type: 'application/x-mpegURL',
+        type: 'video/x-flv',
       },
       function () {
         this.play();

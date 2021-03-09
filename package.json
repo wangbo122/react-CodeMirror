@@ -73,7 +73,6 @@
     "url-loader": "4.1.1",
     "video.js": "^7.11.4",
     "videojs": "^1.0.0",
-    "videojs-flash": "^2.2.1",
     "videojs-flvjs-es6": "^1.0.1",
     "web-vitals": "^0.2.4",
     "webpack": "4.44.2",
@@ -171,5 +170,8 @@
         }
       ]
     ]
+  },
+  "devDependencies": {
+    "videojs-flash": "^2.2.1"
   }
 }

@@ -6,7 +6,7 @@ class AAA extends Component {
   openWindow=()=>{
     window.open ("http://localhost:9999/ccc", 
                 "_blank", 
-                "height=800, width=480, toolbar =0, menubar=0, scrollbars=0, resizable=0, location=0, status=0"
+                "height=800, width=500, toolbar =0, menubar=0, scrollbars=0, resizable=0, location=0, status=0"
                 ) 
   }
   render() {

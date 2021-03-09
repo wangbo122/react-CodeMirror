@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Reflv from '../components/Reflv/Reflv';
 // import VideoJs from '../components/VideoJs';
-import style from './CCC.less';
+import style from './flv.less';
+import Iconfont from '../icon'
 
 export default class CCC extends Component {
   state = {
-    m3u8url: 'http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8',
+    flvURL: 'http://119.3.185.27:8080/live?app=myapp&stream=lk',
     chars: [
       {
         name: '鲁北卡（魔兽世界主播）',
@@ -30,7 +31,7 @@ export default class CCC extends Component {
   };
 
   render() {
-    const { m3u8url, chars } = this.state;
+    const { flvURL, chars } = this.state;
     return (
       <div className={style.live_room}>
         <div className={style.live_content}>
@@ -41,10 +42,12 @@ export default class CCC extends Component {
 
           <div className={style.main_content}>
             <div className={style.video_container}>
-              {/* <VideoJs src={m3u8url} width="387" /> */}
+              {/* <VideoJs src={flvURL} width="387" /> */}
               <Reflv
-                url={'https://08b75c335d022787c0321db9be6bf50d.v.smtcdns.net/d1--cn-gotcha04.bilivideo.com/live-bvc/648630/live_11468498_2909234_2500.flv?cdn=cn-gotcha04&expires=1614765877&len=0&oi=2070350087&pt=web&qn=250&trid=cecfc6587d36497da5a5bbb0b4ade48a&sigparams=cdn,expires,len,oi,pt,qn,trid&sign=7a32b994a52de5c6376ac4def9e2dd22&ptype=0&src=9&sl=2&order=1&svr_type=live_oc&tencent_test_client_ip=123.103.9.7&dispatch_from=ztc10.118.116.131&utime=1614762278911_2'}
-                // url={"http://119.3.185.27:8080/live?app=myapp&stream=lk"}
+              id="videoElement"
+              className="flvVideo"
+                // url={'https://d1--cn-gotcha03.bilivideo.com/live-bvc/825710/live_258491326_47763783.flv?expires=1614929440&len=0&oi=2070350087&pt=web&qn=10000&trid=056e273608774c90b33a88782e330725&sigparams=cdn,expires,len,oi,pt,qn,trid&cdn=cn-gotcha03&sign=bcc636861926c4b3bbbc87ecd9a5633d&p2p_type=0&src=5&sl=1&platform=web&pSession=t8XGd6EB-7kfr-4jFd-mEiS-iAGRzFJMAiX5'}
+                url={flvURL}
                 type="flv"
                 isLive
                 cors
@@ -55,12 +58,11 @@ export default class CCC extends Component {
                 }}
               />
             </div>
-            
+
             <div className={style.chat_content_indistinct}></div>
-            
+
             <div className={style.chat_room}>
               <div className={style.chat_boxes}>
-                <div className={style.chat_history_obscure} />
                 {chars.map((i) => {
                   return (
                     <div className={style.chat_content}>
@@ -69,15 +71,18 @@ export default class CCC extends Component {
                   );
                 })}
               </div>
-              <div className={style.input_field}>
-                <img src="https://jstop1.com/blog/blogPortrait.jpg" />
+            </div>
+            
+            <div className={style.input_field}>
+              <div className={style.chat_input}>
                 <input placeholder="快点发条弹幕吧~"></input>
-                <img src="https://jstop1.com/blog/blogPortrait.jpg" />
+              </div>
+              <div className={style.chat_input}>
+                <Iconfont type='icon-gouwuche'/>
+                <Iconfont type='icon-liwu'/>
               </div>
             </div>
           </div>
-
-          <div className={style.page_footer}></div>
         </div>
       </div>
     );

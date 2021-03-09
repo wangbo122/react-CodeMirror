@@ -1,104 +1,64 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import flvjs from 'flv.js';
 
 /**
  * react component wrap flv.js
  */
 export default class Reflv extends Component {
-
-    static propTypes = {
-        className: PropTypes.string,
-        style: PropTypes.object,
-        /**
-         * media URL, can be starts with 'https(s)' or 'ws(s)' (WebSocket)
-         */
-        url: PropTypes.string,
-        /**
-         * media type, 'flv' or 'mp4'
-         */
-        type: PropTypes.oneOf(['flv', 'mp4']).isRequired,
-        /**
-         * whether the data source is a **live stream**
-         */
-        isLive: PropTypes.bool,
-        /**
-         * whether to enable CORS for http fetching
-         */
-        cors: PropTypes.bool,
-        /**
-         * whether to do http fetching with cookies
-         */
-        withCredentials: PropTypes.bool,
-        /**
-         * whether the stream has audio track
-         */
-        hasAudio: PropTypes.bool,
-        /**
-         * whether the stream has video track
-         */
-        hasVideo: PropTypes.bool,
-        /**
-         * total media duration, in milliseconds
-         */
-        duration: PropTypes.bool,
-        /**
-         * total file size of media file, in bytes
-         */
-        filesize: PropTypes.number,
-        /**
-         * Optional field for multipart playback, see MediaSegment
-         */
-        segments: PropTypes.arrayOf(PropTypes.shape({
-            /**
-             * indicates segment duration in milliseconds
-             */
-            duration: PropTypes.number.isRequired,
-            /**
-             * indicates segment file size in bytes
-             */
-            filesize: PropTypes.number,
-            /**
-             * indicates segment file URL
-             */
-            url: PropTypes.string.isRequired,
-        })),
-        /**
-         * @see https://github.com/Bilibili/flv.js/blob/master/docs/api.md#config
-         */
-        config: PropTypes.object,
-    }
-
-    initFlv = ($video) => {
-        if ($video) {
-            if (flvjs.isSupported()) {
-                let flvPlayer = flvjs.createPlayer({ ...this.props }, this.props.config);
-                flvPlayer.attachMediaElement($video);
-                flvPlayer.load();
-                flvPlayer.play();
-                this.flvPlayer = flvPlayer;
-            }
+  componentDidMount() {
+    if (flvjs.isSupported()) {
+      var videoElement = document.getElementById('videoElement');
+      var flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        url: this.props.url,
+        isLive: true,
+        config: {
+          enableWorker: true,
+          enableStashBuffer: false,
+          stashInitialSize: 128,
+        },
+      });
+      flvPlayer.attachMediaElement(videoElement);
+      flvPlayer.load();
+      flvPlayer.play();
+      flvPlayer.on(flvjs.Events.ERROR, (errType, errDetail) => {
+        console.log(errType, errDetail);
+      });
+      flvPlayer.on("statistics_info", (res)=> {
+        if (this.lastDecodedFrame == 0) {
+          this.lastDecodedFrame = res.decodedFrames;
+          return;
         }
-    }
-
-    componentWillUnmount () {
-        if (this.flvPlayer) {
-            this.flvPlayer.unload();
-            this.flvPlayer.detachMediaElement();
+        if (this.lastDecodedFrame != res.decodedFrames) {
+          this.lastDecodedFrame = res.decodedFrames;
+        } else {
+            this.lastDecodedFrame = 0;
+            if (this.player) {
+              this.player.pause();
+              this.player.unload();
+              this.player.detachMediaElement();
+              this.player.destroy();
+              this.player= null;
+              this.createPlayer(videoElement, this.props.url);
+          }
         }
+      });
+      flvPlayer.on(flvjs.Events.MEDIA_SOURCE_CLOSE||flvjs.Events.MEDIA_SOURCE_ENDED, (res) =>{
+        console.log('Events.MEDIA_SOURCE_CLOSE or Events.MEDIA_SOURCE_ENDED',res)
+      })
     }
+  }
 
-    render () {
-        const { className, style } = this.props;
-        return (
-            <video
-                className={className}
-                controls={true}
-                style={Object.assign({
-                    width: '100vw'
-                }, style)}
-                ref={this.initFlv}
-            />
-        )
+  componentWillUnmount() {
+    if (this.flvPlayer) {
+      this.flvPlayer.unload();
+      this.flvPlayer.detachMediaElement();
     }
+  }
+
+  render() {
+    return (
+      <video id="videoElement" controls muted style={{width: '100vw',height: '100%',}}/>
+    );
+  }
 }

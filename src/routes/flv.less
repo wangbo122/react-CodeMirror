@@ -1,0 +1,155 @@
+.live_room {
+  width: 100vw;
+  height: 100vh;
+  .live_content {
+    height: 100%;
+    width: 100%;
+    .room_bar {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .main_content {
+      height: calc(100vh - 40px);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      .video_container {
+        width: 100%;
+        flex-shrink: 1;
+        flex-basis: 40%;
+      }
+      .chat_room {
+        width: 100%;
+        flex-basis: 50%;
+        overflow-y: auto;
+        z-index: 999;
+        .chat_boxes {
+            padding: 10px;
+          .chat_content {
+            padding: 2px 5px;
+            margin-bottom: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: fit-content;
+            font-weight: lighter;
+          }
+        }
+      }
+      .input_field {
+        width: 100%;
+        flex-shrink: 1;
+        flex-basis: 10%;
+        background-color: rgb(250, 250, 250);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        input {
+          height: 30px;
+          width: 40vw;
+          border-radius: 15px;
+          outline-style: none;
+          margin-left: 10px;
+        }
+        svg {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          margin: 0 10px;
+          -moz-border-radius: 50%;
+          -webkit-border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+/* filter是对该元素的模糊，因此对content添加并模糊伪元素，并定位到content的下层，而不是直接修改背景图或content的样式 */
+.live_content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  filter: blur(8px);
+  background: url('https://jstop1.com/blog/lifeimg/life4.jpg') no-repeat 100% 100%;
+  background-size: cover;
+  opacity: 0.5;
+}
+.live_content video,
+.live_content p {
+  color: white;
+  letter-spacing: 1px;
+  /* 清除子元素对父元素filter属性值的继承 */
+  filter: blur(0);
+}
+
+video {
+  border-radius: 5px;
+  z-index: 999;
+}
+
+/*滚动条*/
+div::-webkit-scrollbar {
+  display: none;
+}
+
+/*手机*/
+@media screen and (max-width: 600px) {
+  .room_bar {
+    min-width: 400px;
+  }
+  .main_content {
+    .chat_room {
+      min-width: 400px;
+    }
+    .input_field {
+      min-width: 400px;
+    }
+  }
+  video {
+    min-width: 400px;
+  }
+}
+
+/*平板*/
+@media screen and (min-width: 600px) and (max-width: 960px) {
+  .video_container {
+    text-align: center;
+  }
+  .chat_room {
+    margin: 0 auto;
+    max-width: 700px;
+  }
+  video {
+    max-width: 700px;
+  }
+}
+
+/*PC*/
+@media screen and (min-width: 960px) {
+  .room_bar {
+    display: none !important;
+  }
+  .main_content {
+    background-color: red;
+    align-items: center;
+    flex-direction: row !important;
+    justify-content: center;
+    .chat_room {
+      margin-left: 2vw;
+      max-height: 60vh;
+      flex-basis: 30% !important;
+    }
+    .input_field {
+      display: none !important;
+    }
+  }
+  video {
+    height: auto !important;
+    max-width: 850px;
+  }
+}
